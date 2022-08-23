@@ -35,13 +35,12 @@ import fs from 'fs';
 
   app.get("/filteredimage/", async (req: Request, res: Response) => {
     let { image_url } = req.query;
-    let image_path: string;
 
     if (!image_url) {
       return res.status(400)
         .send("An image URL is required!");
     }
-    image_path = await filterImageFromURL(image_url);
+    let image_path: string = await filterImageFromURL(image_url);
     res.status(200).sendFile(image_path, () => {
       deleteLocalFiles([image_path]);
     });
